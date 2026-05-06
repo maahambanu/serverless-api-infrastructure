@@ -1,0 +1,8 @@
+{
+  "name": "serverless-api",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "scripts": {
+    "lint": "echo 'lint placeholder'"
+  }
+}
