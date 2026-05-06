@@ -1,5 +1,4 @@
 module "app" {
-  source = "../../modules"
-
+  source      = "../../modules/app"
   environment = "staging"
 }
