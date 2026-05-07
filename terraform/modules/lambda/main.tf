@@ -46,18 +46,27 @@ resource "aws_iam_role_policy_attachment" "attach" {
 }
 
 resource "aws_lambda_function" "api" {
+
+  depends_on = [
+    aws_cloudwatch_log_group.lambda_logs
+  ]
+
   function_name = "api-${var.environment}"
   role          = aws_iam_role.lambda_role.arn
   handler       = "handler.handler"
   runtime       = "nodejs18.x"
 
-  filename         = "${path.module}/lambda.zip"
-  source_code_hash = filebase64sha256("${path.module}/lambda.zip")
+  filename         = data.archive_file.lambda_zip.output_path
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 
   environment {
     variables = {
-      ENV                  = var.environment
-      DYNAMODB_TABLE_NAME  = var.dynamodb_table_name
+      ENV                 = var.environment
+      DYNAMODB_TABLE_NAME = var.dynamodb_table_name
     }
+  }
+
+  tracing_config {
+    mode = "Active"
   }
 }
