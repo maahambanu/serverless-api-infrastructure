@@ -1,4 +1,4 @@
 module "app" {
   source      = "../../modules/app"
-  environment = "production"
+  environment = var.environment
 }
