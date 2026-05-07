@@ -8,6 +8,7 @@ module "lambda" {
   environment = var.environment
 
   dynamodb_table_name = module.dynamodb.table_name
+  dynamodb_table_arn  = module.dynamodb.table_arn
 }
 
 module "api_gateway" {

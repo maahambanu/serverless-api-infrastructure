@@ -26,7 +26,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ]
-        Resource = "*"
+        Resource = var.dynamodb_table_arn
       },
       {
         Effect = "Allow"
