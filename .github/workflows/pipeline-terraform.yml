@@ -6,6 +6,8 @@ on:
       - main
 
   pull_request:
+    branches:
+      - main
 
 env:
   TF_VERSION: 1.10.5
@@ -20,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: app   # <-- your lambda folder
+        working-directory: app   
 
     steps:
       - name: Checkout code
@@ -35,7 +37,7 @@ jobs:
         run: npm install
 
       - name: Run Lint
-        run: npm run lint
+        run: npx eslint . && echo "ESLint passed successfully"
 
       - name: Run Unit Tests
         run: npm test
@@ -82,6 +84,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
 
+    if: github.event_name == 'push'
+
     defaults:
       run:
         working-directory: terraform/environments/staging
@@ -117,6 +121,8 @@ jobs:
     needs: apply-staging
     runs-on: ubuntu-latest
     environment: production
+
+    if: github.event_name == 'push'
 
     defaults:
       run:
