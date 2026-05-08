@@ -1,7 +1,3 @@
-variable "environment" {
-  type = string
-}
-
 variable "lambda_artifact_key" {
   description = "S3 object key for Lambda artifact"
   type        = string

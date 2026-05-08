@@ -3,6 +3,7 @@ module "app" {
   environment = "staging"
 
   lambda_source_hash = var.lambda_source_hash
+  lambda_artifact_key = var.lambda_artifact_key
 }
 
 terraform {
