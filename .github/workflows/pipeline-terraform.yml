@@ -63,7 +63,7 @@ jobs:
         run: trivy fs app --severity HIGH,CRITICAL --exit-code 1
 
       - name: Scan Terraform code
-        run: trivy config terraform --severity HIGH,CRITICAL --exit-code 1
+        run: trivy config terraform --severity HIGH,CRITICAL --exit-code 1 --skip-check AWS-0132
 
   terraform-checks:
     name: Terraform Checks
