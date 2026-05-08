@@ -9,6 +9,7 @@ module "lambda" {
 
   dynamodb_table_name = module.dynamodb.table_name
   dynamodb_table_arn  = module.dynamodb.table_arn
+  api_gateway_execution_arn = module.api_gateway.execution_arn
 }
 
 module "api_gateway" {
