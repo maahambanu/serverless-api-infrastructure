@@ -18,19 +18,6 @@ resource "aws_s3_bucket_public_access_block" "block_public_access" {
   restrict_public_buckets = true
 }
 
-# CREATE KMS KEYS
-
-resource "aws_kms_key" "s3_kms" {
-  description             = "KMS key for Lambda artifact bucket"
-  deletion_window_in_days = 7
-  enable_key_rotation     = true
-
-  tags = {
-    Environment = var.environment
-    Project     = "serverless-api"
-  }
-}
-
 # ENABLE VERSIONING
 
 resource "aws_s3_bucket_versioning" "versioning" {
@@ -43,18 +30,12 @@ resource "aws_s3_bucket_versioning" "versioning" {
 
 # ENABLE SERVER SIDE ENCRYPTION
 
-resource "aws_kms_alias" "s3_kms_alias" {
-  name          = "alias/serverless-api-${var.environment}"
-  target_key_id = aws_kms_key.s3_kms.key_id
-}
-
 resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
   bucket = aws_s3_bucket.lambda_artifacts.id
 
   rule {
     apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.s3_kms.arn
-      sse_algorithm     = "AES256"
+      sse_algorithm = "AES256"
     }
   }
 }
