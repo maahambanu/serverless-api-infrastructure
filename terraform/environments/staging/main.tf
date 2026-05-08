@@ -1,6 +1,7 @@
 module "app" {
   source      = "../../modules/app"
   environment = "staging"
+  lambda_source_hash = var.lambda_source_hash
 }
 
 terraform {
