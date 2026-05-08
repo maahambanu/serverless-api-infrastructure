@@ -14,7 +14,7 @@ module "lambda" {
 
   lambda_source_hash     = var.lambda_source_hash
   lambda_artifact_bucket = module.artifact_bucket.bucket_name
-  lambda_artifact_key = var.lambda_artifact_key
+  lambda_artifact_key    = var.lambda_artifact_key
 }
 
 module "api_gateway" {
