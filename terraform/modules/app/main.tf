@@ -28,4 +28,5 @@ module "artifact_bucket" {
   source = "../s3-artifacts"
 
   environment = var.environment
+  bucket_name  = "serverless-api-artifacts-mb"
 }
