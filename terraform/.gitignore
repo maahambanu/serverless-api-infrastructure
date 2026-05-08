@@ -1,4 +1,10 @@
-echo "**/.terraform/" >> .gitignore
-echo "*.tfstate" >> .gitignore
-echo "*.tfstate.*" >> .gitignore
-echo "crash.log" >> .gitignore
+# Terraform
+.terraform/
+
+# State files
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Node dependencies
+node_modules/

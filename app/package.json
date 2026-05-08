@@ -1,8 +1,13 @@
 {
   "name": "serverless-api",
   "version": "1.0.0",
-  "main": "handler.js",
+  "main": "index.js",
   "scripts": {
-    "lint": "echo 'lint placeholder'"
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "jest": "^29.7.0"
   }
 }
