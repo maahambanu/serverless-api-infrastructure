@@ -2,12 +2,14 @@
   "name": "serverless-api",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . && echo \"ESLint passed successfully\""
   },
   "devDependencies": {
-    "eslint": "^9.0.0",
+    "eslint": "^8.57.1",
     "jest": "^29.7.0"
   }
 }
