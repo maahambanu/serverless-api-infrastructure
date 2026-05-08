@@ -1,4 +1,4 @@
-const { handler } = require("./index");
+const { handler } = require("./handler");
 
 describe("Lambda handler tests", () => {
 
