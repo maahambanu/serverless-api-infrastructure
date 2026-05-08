@@ -34,7 +34,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "dynamodb:PutItem",
           "dynamodb:GetItem"
         ]
-        Resource = Resource = var.dynamodb_table_arn
+        Resource = var.dynamodb_table_arn
       }
     ]
   })
