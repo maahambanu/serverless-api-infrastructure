@@ -4,7 +4,11 @@
 # State files
 *.tfstate
 *.tfstate.*
+terraform.tfstate*
 crash.log
 
 # Node dependencies
 node_modules/
+
+# Lamda zip file
+*.zip
