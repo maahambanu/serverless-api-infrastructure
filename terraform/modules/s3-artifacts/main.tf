@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "lambda_artifacts" {
-  bucket = "serverless-api-artifacts-${var.environment}"
+  bucket = "serverless-api-artifacts-mb"
 
   tags = {
     Environment = var.environment
