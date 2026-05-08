@@ -144,6 +144,15 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+      
+      - name: Create Lambda ZIP
+        run: |
+              cd app
+              zip -r lambda.zip .
+
+      - name: Upload Lambda artifact to S3
+        run: |
+              aws s3 cp app/lambda.zip s3://serverless-api-artifacts/lambda-${{ github.sha }}.zip
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
@@ -181,6 +190,15 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+      
+      - name: Create Lambda ZIP
+        run: |
+              cd app
+              zip -r lambda.zip .
+
+      - name: Upload Lambda artifact to S3
+        run: |
+              aws s3 cp app/lambda.zip s3://serverless-api-artifacts/lambda-${{ github.sha }}.zip
 
       - name: Terraform Apply
         run: terraform apply -auto-approve

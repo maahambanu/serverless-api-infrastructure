@@ -9,7 +9,11 @@ module "lambda" {
 
   dynamodb_table_name = module.dynamodb.table_name
   dynamodb_table_arn  = module.dynamodb.table_arn
+
   api_gateway_execution_arn = module.api_gateway.execution_arn
+
+  lambda_artifact_bucket = module.artifact_bucket.bucket_name
+  lambda_artifact_key    = "lambda.zip"
 }
 
 module "api_gateway" {
@@ -17,4 +21,10 @@ module "api_gateway" {
   environment = var.environment
 
   lambda_arn = module.lambda.lambda_arn
+}
+
+module "artifact_bucket" {
+  source = "../s3-artifacts"
+
+  environment = var.environment
 }

@@ -56,8 +56,9 @@ resource "aws_lambda_function" "api" {
   handler       = "handler.handler"
   runtime       = "nodejs18.x"
 
-  filename         = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  s3_bucket = var.lambda_artifact_bucket
+  s3_key    = var.lambda_artifact_key
+
 
   environment {
     variables = {

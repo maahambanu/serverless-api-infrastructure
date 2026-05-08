@@ -15,3 +15,11 @@ variable "api_gateway_execution_arn" {
   type        = string
   description = "Execution ARN of API Gateway"
 }
+
+variable "lambda_artifact_bucket" {
+  type = string
+}
+
+variable "lambda_artifact_key" {
+  type = string
+}
