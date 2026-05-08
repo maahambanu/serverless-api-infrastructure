@@ -59,6 +59,7 @@ resource "aws_lambda_function" "api" {
   s3_bucket = var.lambda_artifact_bucket
   s3_key    = var.lambda_artifact_key
 
+  source_code_hash = var.lambda_source_hash
 
   environment {
     variables = {
