@@ -34,7 +34,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "dynamodb:PutItem",
           "dynamodb:GetItem"
         ]
-        Resource = "*"
+        Resource = Resource = var.dynamodb_table_arn
       }
     ]
   })
@@ -69,4 +69,10 @@ resource "aws_lambda_function" "api" {
   tracing_config {
     mode = "Active"
   }
+}
+
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_dir  = "${path.module}/../../app"
+  output_path = "${path.module}/lambda.zip"
 }

@@ -11,11 +11,42 @@ env:
   TF_VERSION: 1.10.5
   AWS_REGION: ap-south-1
 
+# 1. NODE TEST + LINT STAGE
 jobs:
+
+  node-tests:
+    name: Node Lint + Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: app   # <-- your lambda folder
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Run Unit Tests
+        run: npm test
+
+
+# 2. TERRAFORM VALIDATION
 
   terraform-checks:
     name: Terraform Checks
     runs-on: ubuntu-latest
+    needs: node-tests   # <-- ensures tests pass before infra runs
 
     defaults:
       run:
@@ -30,13 +61,6 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Terraform Init
         run: terraform init
 
@@ -48,6 +72,9 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+
+
+# 3. DEPLOY STAGING
 
   apply-staging:
     name: Deploy Staging
@@ -81,6 +108,10 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+
+
+# 4. DEPLOY PRODUCTION
+
   apply-production:
     name: Deploy Production
     needs: apply-staging
@@ -112,4 +143,3 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-  
