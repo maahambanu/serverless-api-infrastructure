@@ -100,7 +100,10 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -lock-timeout=5m
+        run: |
+         terraform plan -lock-timeout=5m -input=false \
+         -var="lambda_artifact_key=dummy-plan-artifact.zip" \
+         -var="lambda_source_hash=dummy-hash
 
   apply-staging:
     name: Deploy Staging
