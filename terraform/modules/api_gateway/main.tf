@@ -21,11 +21,3 @@ resource "aws_apigatewayv2_stage" "default" {
   auto_deploy = true
 }
 
-resource "aws_lambda_permission" "allow_apigw" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = var.lambda_arn
-  principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${var.api_gateway_execution_arn}/*/*"
-}
