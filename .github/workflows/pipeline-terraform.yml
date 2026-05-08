@@ -63,7 +63,6 @@ jobs:
 
       - name: Scan Node dependencies
         run: |
-          cd app
           trivy fs . --severity HIGH,CRITICAL --exit-code 1
 
       - name: Scan Terraform code
@@ -146,9 +145,8 @@ jobs:
         run: terraform init
       
       - name: Create Lambda ZIP
-        run: |
-              cd app
-              zip -r lambda.zip .
+        working-directory: app
+        run: zip -r lambda.zip .
 
       - name: Upload Lambda artifact to S3
         run: |
@@ -192,9 +190,8 @@ jobs:
         run: terraform init
       
       - name: Create Lambda ZIP
-        run: |
-              cd app
-              zip -r lambda.zip .
+        working-directory: app
+        run: zip -r lambda.zip .
 
       - name: Upload Lambda artifact to S3
         run: |
