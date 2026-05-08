@@ -195,7 +195,7 @@ jobs:
 
       - name: Upload Lambda artifact to S3
         run: |
-              aws s3 cp app/lambda.zip s3://serverless-api-artifacts/lambda-${{ github.sha }}.zip
+              aws s3 cp app/lambda.zip s3://serverless-api-artifacts-mb/lambda-${{ github.sha }}.zip
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
