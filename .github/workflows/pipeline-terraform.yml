@@ -145,8 +145,8 @@ jobs:
         run: terraform init
       
       - name: Create Lambda ZIP
-        working-directory: app
         run: zip -r lambda.zip .
+        working-directory: app
 
       - name: Upload Lambda artifact to S3
         run: |
@@ -190,8 +190,8 @@ jobs:
         run: terraform init
       
       - name: Create Lambda ZIP
-        working-directory: app
         run: zip -r lambda.zip .
+        working-directory: app
 
       - name: Upload Lambda artifact to S3
         run: |
