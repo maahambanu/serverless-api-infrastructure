@@ -11,7 +11,8 @@ module "lambda" {
   dynamodb_table_arn  = module.dynamodb.table_arn
 
   api_gateway_execution_arn = module.api_gateway.execution_arn
-
+  
+  lambda_artifact_bucket = "serverless-api-artifacts-mb"
   lambda_source_hash  = var.lambda_source_hash
   lambda_artifact_key = var.lambda_artifact_key
 }
