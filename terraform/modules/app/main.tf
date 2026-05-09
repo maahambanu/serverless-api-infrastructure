@@ -23,5 +23,7 @@ module "api_gateway" {
   source      = "../api_gateway"
   environment = var.environment
 
+  alert_email = var.alert_email
+
   lambda_arn = module.lambda.lambda_arn
 }
