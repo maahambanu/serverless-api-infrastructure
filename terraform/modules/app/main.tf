@@ -13,6 +13,7 @@ module "lambda" {
   api_gateway_execution_arn = module.api_gateway.execution_arn
 
   lambda_source_hash     = var.lambda_source_hash
+  lambda_artifact_key    = var.lambda_artifact_key
 }
 
 module "api_gateway" {
