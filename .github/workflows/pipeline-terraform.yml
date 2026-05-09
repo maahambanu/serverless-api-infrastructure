@@ -63,7 +63,7 @@ jobs:
         run: trivy fs app --severity HIGH,CRITICAL --exit-code 1
 
       - name: Scan Terraform code
-        run: trivy config terraform --severity HIGH,CRITICAL --exit-code 1 --skip-check AWS-0132
+        run: trivy config terraform --severity HIGH,CRITICAL --exit-code 1
 
   terraform-checks:
     name: Terraform Checks
@@ -102,8 +102,8 @@ jobs:
       - name: Terraform Plan
         run: |
          terraform plan -lock-timeout=5m -input=false \
-         -var="lambda_artifact_key=dummy-plan-artifact.zip" \
-         -var="lambda_source_hash=dummy-hash"
+          -var="lambda_artifact_key=dummy-plan-artifact.zip" \
+          -var="lambda_source_hash=dummy-hash"
 
   apply-staging:
     name: Deploy Staging
