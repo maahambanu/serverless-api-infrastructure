@@ -1,7 +1,7 @@
 const eventsStore = []; // in-memory store for simplicity (replace with DynamoDB later)
 
 exports.handler = async (event) => {
-  const method = event.httpMethod;
+  const method = event.requestContext?.http?.method;
   const path = event.rawPath;
 
   const log = {
