@@ -8,8 +8,3 @@ variable "lambda_source_hash" {
   description = "Base64 encoded SHA256 hash of Lambda artifact"
   type        = string
 }
-
-variable "alert_email" {
-  description = "Email address for CloudWatch alerts"
-  type        = string
-}
