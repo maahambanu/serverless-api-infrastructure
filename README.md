@@ -11,7 +11,8 @@ The platform provisions:
 - CloudWatch logging and alarms
 - Terraform remote state management
 - CI/CD pipeline with security checks and gated production deployments
-![CI](https://github.com/<user>/<repo>/actions/workflows/pipeline.yml/badge.svg)
+
+![CI](https://github.com/maahambanu/serverless-api-infrastructure/actions/workflows/pipeline.yml/badge.svg)
 
 ## Engineering Decisions
 
