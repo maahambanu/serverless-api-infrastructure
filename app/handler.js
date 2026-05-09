@@ -1,8 +1,8 @@
-const eventsStore = []; // in-memory store for simplicity (replace with DynamoDB later)
+const eventsStore = [];
 
 exports.handler = async (event) => {
-  const method = event.requestContext?.http?.method;
-  const path = event.rawPath;
+  const method = event.requestContext?.http?.method || event.httpMethod;
+  const path = event.rawPath || event.path;
 
   const log = {
     level: "INFO",
@@ -10,12 +10,13 @@ exports.handler = async (event) => {
     requestId: event.requestContext?.requestId,
     method,
     path,
+    rawPath: event.rawPath,
+    eventPath: event.path,
     timestamp: new Date().toISOString()
   };
 
   console.log(JSON.stringify(log));
 
-  // GET /health
   if (method === "GET" && path === "/health") {
     return {
       statusCode: 200,
@@ -24,15 +25,15 @@ exports.handler = async (event) => {
     };
   }
 
-  // POST /event
   if (method === "POST" && path === "/event") {
     let body;
 
     try {
       body = JSON.parse(event.body || "{}");
-    } catch (err) {
+    } catch (_err) {
       return {
         statusCode: 400,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ error: "Invalid JSON" })
       };
     }
@@ -40,6 +41,7 @@ exports.handler = async (event) => {
     if (!body.type || !body.payload) {
       return {
         statusCode: 400,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ error: "Missing required fields: type, payload" })
       };
     }
@@ -55,12 +57,14 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 201,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: "event stored", event: eventRecord })
     };
   }
 
   return {
     statusCode: 404,
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ error: "Not Found" })
   };
 };
