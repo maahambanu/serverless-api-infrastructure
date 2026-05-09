@@ -13,6 +13,8 @@ resource "aws_dynamodb_table" "events" {
   enabled = true
   }
 
+  deletion_protection_enabled = true
+
   tags = {
     Environment = var.environment
     Project     = "serverless-api"
