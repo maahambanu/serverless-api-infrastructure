@@ -20,6 +20,8 @@ resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
   statistic           = "Sum"
   threshold           = 1
 
+  alarm_actions = [aws_sns_topic.alerts.arn]
+
   dimensions = {
     FunctionName = aws_lambda_function.api.function_name
   }
@@ -47,6 +49,8 @@ resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
 
   # milliseconds
   threshold = 3000
+
+  alarm_actions = [aws_sns_topic.alerts.arn]
 
   dimensions = {
     FunctionName = aws_lambda_function.api.function_name

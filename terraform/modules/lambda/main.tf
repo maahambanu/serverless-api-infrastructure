@@ -45,6 +45,19 @@ resource "aws_iam_role_policy_attachment" "attach" {
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "artifacts_lifecycle" {
+  bucket = aws_s3_bucket.lambda_artifacts.id
+
+  rule {
+    id     = "cleanup-old-artifacts"
+    status = "Enabled"
+
+    expiration {
+      days = 30
+    }
+  }
+}
+
 resource "aws_lambda_function" "api" {
 
   depends_on = [
@@ -58,6 +71,8 @@ resource "aws_lambda_function" "api" {
 
   s3_bucket = var.lambda_artifact_bucket
   s3_key    = var.lambda_artifact_key
+
+  reserved_concurrent_executions = 10
 
   source_code_hash = var.lambda_source_hash
 

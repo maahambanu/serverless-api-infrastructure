@@ -7,6 +7,8 @@ module "lambda" {
   source      = "../lambda"
   environment = var.environment
 
+  alert_email = var.alert_email
+
   dynamodb_table_name = module.dynamodb.table_name
   dynamodb_table_arn  = module.dynamodb.table_arn
 

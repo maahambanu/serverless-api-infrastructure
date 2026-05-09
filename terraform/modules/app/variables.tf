@@ -11,3 +11,8 @@ variable "lambda_artifact_key" {
   description = "S3 object key for Lambda artifact"
   type        = string
 }
+
+variable "alert_email" {
+  description = "Email address for operational alerts"
+  type        = string
+}

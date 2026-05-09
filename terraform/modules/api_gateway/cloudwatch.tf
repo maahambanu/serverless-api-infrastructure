@@ -16,6 +16,8 @@ resource "aws_cloudwatch_metric_alarm" "api_gateway_5xx" {
 
   alarm_description = "Triggers when API Gateway returns too many 5XX responses"
 
+  alarm_actions = [aws_sns_topic.alerts.arn]
+
   tags = {
     Environment = var.environment
     Project     = "serverless-api"

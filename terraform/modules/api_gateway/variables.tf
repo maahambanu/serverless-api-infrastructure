@@ -5,3 +5,8 @@ variable "environment" {
 variable "lambda_arn" {
   type = string
 }
+
+variable "alert_email" {
+  description = "Email address for CloudWatch alerts"
+  type        = string
+}
