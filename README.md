@@ -55,7 +55,7 @@ The platform provisions:
 - Environment isolation
 
 ### CI/CD Pipeline
-- Implemented using GitHub Actions.
+Implemented using GitHub Actions.
 #### Pipeline stages
 - Node.js linting
 - Unit testing (using Jest)
