@@ -7,10 +7,6 @@ variable "lambda_source_hash" {
   type        = string
 }
 
-variable "lambda_artifact_bucket" {
-  type = string
-}
-
 variable "lambda_artifact_key" {
   description = "S3 object key for Lambda artifact"
   type        = string
