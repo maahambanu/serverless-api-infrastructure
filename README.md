@@ -11,6 +11,24 @@ The platform provisions:
 - CloudWatch logging and alarms
 - Terraform remote state management
 - CI/CD pipeline with security checks and gated production deployments
+![CI](https://github.com/<user>/<repo>/actions/workflows/pipeline.yml/badge.svg)
+
+## Engineering Decisions
+
+This implementation intentionally prioritizes:
+- operational simplicity
+- safe deployments
+- rollback capability
+- environment isolation
+- low operational overhead
+
+The architecture uses serverless AWS services to minimize infrastructure management while still supporting production-grade deployment practices such as:
+- immutable Lambda artifacts
+- remote Terraform state locking
+- manual production approvals
+- security scanning
+- rollback workflows
+- disaster recovery considerations
   
 ## Architecture
 
@@ -284,3 +302,28 @@ The solution prioritizes:
 - safe deployments
 - rollback simplicity
 - low operational overhead
+
+## Future Improvements
+
+Potential production-scale enhancements:
+
+- GitHub OIDC federation
+- Canary deployments
+- Blue/Green deployments
+- Cross-region failover
+- Slack/SNS alerting
+- WAF integration
+- Centralized observability dashboards
+
+## Security Posture
+
+Security controls implemented include:
+
+- dedicated IAM user for CI/CD
+- least privilege IAM policies
+- Trivy dependency and IaC scanning
+- Terraform state locking
+- externalized configuration via AWS SSM
+- immutable deployment artifacts
+- manual production approval gates
+- CloudWatch operational monitoring
