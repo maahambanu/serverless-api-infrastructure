@@ -251,4 +251,18 @@ The solution was designed for AWS Free Tier compatibility where possible:
 - DynamoDB on-demand billing
 - API Gateway HTTP API
 - CloudWatch basic monitoring
-  
+
+## Cost Considerations
+The current implementation is intentionally optimized for low operational overhead and cost efficiency by leveraging serverless AWS services such as Lambda, API Gateway HTTP API, and DynamoDB On-Demand billing. This architecture is highly cost-effective for small to medium workloads because compute and database costs scale based on actual usage rather than pre-provisioned infrastructure.
+
+For larger-scale scenarios, such as a healthcare platform with approximately 100 APIs and onboarding roughly 20,000 new users per month, the architecture would still scale operationally, but additional cost optimization strategies would become important. At higher traffic volumes, DynamoDB capacity modes may need to transition from On-Demand to Provisioned Capacity with Auto Scaling to better control predictable workloads. API Gateway and Lambda execution costs would also become significant contributors, making monitoring of invocation patterns, cold starts, and inefficient API calls increasingly important.
+
+In a production-scale environment, further optimizations would likely include:
+- introducing caching layers such as API Gateway caching or Redis/ElastiCache
+- reducing Lambda cold starts through provisioned concurrency for critical APIs
+- separating high-frequency and low-frequency workloads
+- implementing lifecycle policies for CloudWatch Logs and S3 artifacts
+- introducing centralized observability and cost monitoring dashboards
+-  container-based workloads (ECS/EKS) for consistently high-throughput services where serverless pricing may become less economical
+
+The current design prioritizes simplicity, operational safety, rapid deployment, and scalability, while still providing a clear evolutionary path toward larger-scale production workloads.
