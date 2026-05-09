@@ -1,13 +1,15 @@
 const { handler } = require("./handler");
 
 describe("Lambda handler tests", () => {
-
-
   test("GET /health should return 200 with status ok", async () => {
     const event = {
-      httpMethod: "GET",
       rawPath: "/health",
-      requestContext: { requestId: "test-request-id" }
+      requestContext: {
+        requestId: "test-request-id",
+        http: {
+          method: "GET"
+        }
+      }
     };
 
     const response = await handler(event);
@@ -17,12 +19,15 @@ describe("Lambda handler tests", () => {
     expect(JSON.parse(response.body)).toEqual({ status: "ok" });
   });
 
-
   test("POST /event should store event and return 201", async () => {
     const event = {
-      httpMethod: "POST",
       rawPath: "/event",
-      requestContext: { requestId: "test-request-id" },
+      requestContext: {
+        requestId: "test-request-id",
+        http: {
+          method: "POST"
+        }
+      },
       body: JSON.stringify({
         type: "USER_CREATED",
         payload: {
@@ -46,8 +51,12 @@ describe("Lambda handler tests", () => {
 
   test("POST /event with invalid JSON should return 400", async () => {
     const event = {
-      httpMethod: "POST",
       rawPath: "/event",
+      requestContext: {
+        http: {
+          method: "POST"
+        }
+      },
       body: "invalid-json"
     };
 
@@ -59,11 +68,14 @@ describe("Lambda handler tests", () => {
 
   test("POST /event missing fields should return 400", async () => {
     const event = {
-      httpMethod: "POST",
       rawPath: "/event",
+      requestContext: {
+        http: {
+          method: "POST"
+        }
+      },
       body: JSON.stringify({
         type: "INCOMPLETE_EVENT"
-        // payload missing
       })
     };
 
@@ -73,11 +85,14 @@ describe("Lambda handler tests", () => {
     expect(JSON.parse(response.body).error).toMatch(/Missing required fields/);
   });
 
- 
   test("Unknown route should return 404", async () => {
     const event = {
-      httpMethod: "GET",
-      rawPath: "/unknown"
+      rawPath: "/unknown",
+      requestContext: {
+        http: {
+          method: "GET"
+        }
+      }
     };
 
     const response = await handler(event);
@@ -85,5 +100,4 @@ describe("Lambda handler tests", () => {
     expect(response.statusCode).toBe(404);
     expect(JSON.parse(response.body).error).toBe("Not Found");
   });
-
 });
