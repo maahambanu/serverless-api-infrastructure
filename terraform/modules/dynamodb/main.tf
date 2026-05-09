@@ -9,6 +9,10 @@ resource "aws_dynamodb_table" "events" {
     type = "S"
   }
 
+  point_in_time_recovery {
+  enabled = true
+  }
+
   tags = {
     Environment = var.environment
     Project     = "serverless-api"
