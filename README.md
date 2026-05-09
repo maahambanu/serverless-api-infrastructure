@@ -12,7 +12,7 @@ The platform provisions:
 - Terraform remote state management
 - CI/CD pipeline with security checks and gated production deployments
 
-![CI](https://github.com/maahambanu/serverless-api-infrastructure/actions/workflows/pipeline.yml/badge.svg)
+![CI](https://github.com/maahambanu/serverless-api-infrastructure/actions/workflows/pipeline-terraform.yml/badge.svg)
 
 ## Engineering Decisions
 
