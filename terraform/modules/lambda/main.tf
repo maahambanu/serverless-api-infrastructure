@@ -45,18 +45,6 @@ resource "aws_iam_role_policy_attachment" "attach" {
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "artifacts_lifecycle" {
-  bucket = aws_s3_bucket.lambda_artifacts.id
-
-  rule {
-    id     = "cleanup-old-artifacts"
-    status = "Enabled"
-
-    expiration {
-      days = 30
-    }
-  }
-}
 
 resource "aws_lambda_function" "api" {
 
