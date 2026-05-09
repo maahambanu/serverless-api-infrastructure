@@ -266,3 +266,21 @@ In a production-scale environment, further optimizations would likely include:
 -  container-based workloads (ECS/EKS) for consistently high-throughput services where serverless pricing may become less economical
 
 The current design prioritizes simplicity, operational safety, rapid deployment, and scalability, while still providing a clear evolutionary path toward larger-scale production workloads.
+
+## Intentional Trade-offs
+
+To keep the assignment focused and operationally simple, the following were intentionally not implemented:
+
+- Blue/Green deployments
+- Multi-region failover
+- Canary deployments
+- Cross-account AWS setup
+- Kubernetes/EKS orchestration
+- Complex observability stacks
+
+The solution prioritizes:
+- operational clarity
+- reproducibility
+- safe deployments
+- rollback simplicity
+- low operational overhead
