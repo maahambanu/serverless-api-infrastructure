@@ -16,6 +16,10 @@ variable "api_gateway_execution_arn" {
   description = "Execution ARN of API Gateway"
 }
 
+variable "lambda_artifact_bucket" {
+  type = string
+}
+
 variable "lambda_artifact_key" {
   description = "S3 object key for Lambda artifact"
   type        = string
