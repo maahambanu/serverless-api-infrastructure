@@ -1,5 +1,6 @@
 resource "aws_sns_topic" "alerts" {
-  name = "serverless-api-alerts-${var.environment}"
+  name              = "serverless-api-alerts-${var.environment}"
+  kms_master_key_id = "alias/aws/sns"
 
   tags = {
     Environment = var.environment
