@@ -56,8 +56,8 @@ resource "aws_lambda_function" "api" {
   handler       = "handler.handler"
   runtime       = "nodejs18.x"
 
-  s3_bucket = var.lambda_artifact_bucket
-  s3_key    = var.lambda_artifact_key
+  lambda_artifact_bucket = "serverless-api-artifacts-mb"
+  lambda_artifact_key    = var.lambda_artifact_key
 
   source_code_hash = var.lambda_source_hash
 
