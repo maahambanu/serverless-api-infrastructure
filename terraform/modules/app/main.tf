@@ -13,7 +13,7 @@ module "lambda" {
   api_gateway_execution_arn = module.api_gateway.execution_arn
 
   lambda_source_hash     = var.lambda_source_hash
-  lambda_artifact_bucket = module.artifact_bucket.bucket_name
+  lambda_artifact_bucket = "serverless-api-artifacts-mb"
   lambda_artifact_key    = var.lambda_artifact_key
 }
 
