@@ -8,6 +8,8 @@ resource "aws_cloudwatch_log_group" "lambda_logs" {
   }
 }
 
+# Lambda Error Alarm
+
 resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
   alarm_name          = "lambda-errors-${var.environment}"
   comparison_operator = "GreaterThanThreshold"
@@ -22,12 +24,17 @@ resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
     FunctionName = aws_lambda_function.api.function_name
   }
 
-  alarm_description = "Alarm when Lambda has errors"
+  treat_missing_data = "notBreaching"
+
+  alarm_description = "Triggers when Lambda records more than 1 error within 60 seconds"
 
   tags = {
     Environment = var.environment
+    Project     = "serverless-api"
   }
 }
+
+# Lambda Duration / Timeout Alarm
 
 resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
   alarm_name          = "lambda-duration-${var.environment}"
@@ -37,15 +44,20 @@ resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
   namespace           = "AWS/Lambda"
   period              = 60
   statistic           = "Average"
-  threshold           = 3000
+
+  # milliseconds
+  threshold = 3000
 
   dimensions = {
     FunctionName = aws_lambda_function.api.function_name
   }
 
-  alarm_description = "Alarm when Lambda duration is too high"
+  treat_missing_data = "notBreaching"
+
+  alarm_description = "Triggers when Lambda average duration exceeds 3 seconds"
 
   tags = {
     Environment = var.environment
+    Project     = "serverless-api"
   }
 }
