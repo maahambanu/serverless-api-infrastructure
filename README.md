@@ -194,8 +194,15 @@ response:
 ```
 {"status":"ok"}
 ```
-```
-POST
+### Event Endpoint
+`POST /event`
+
+Request body:
+```json
+{
+  "type": "user_signup",
+  "payload": { "user": "maham", "source": "web" }
+}
 ```
 Response:
 ```
@@ -331,7 +338,7 @@ DynamoDB was selected for:
 Lambda artifacts are versioned and stored in S3:
 - deterministic rollback
 - immutable deployments
-- operational 
+- operational safety and auditability
 
 ### Why Terraform modules
 Modules improve:
@@ -344,7 +351,6 @@ GitHub Actions was selected due to:
 - repository-native CI/CD
 - integrated environment approvals
 - simplified operational workflow
-- Future Improvements
 
 The solution was designed for AWS Free Tier compatibility where possible:
 - Lambda serverless execution
