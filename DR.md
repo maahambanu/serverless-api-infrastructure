@@ -182,7 +182,7 @@ Validate:
 
 ## Regular DR Testing
 
-### Monthly — Rollback test (staging)
+### Monthly: Rollback test (staging)
 1. Identify the second-most-recent artifact in S3
 2. Trigger the Manual Rollback workflow against staging
 3. Provide the previous artifact key
@@ -191,7 +191,7 @@ Validate:
 
 **Pass criteria:** rollback completes in under 15 minutes
 
-### Quarterly — DynamoDB PITR restore test
+### Quarterly: DynamoDB PITR restore test
 1. Note current timestamp
 2. Write 3–5 test records via `POST /event`
 3. In DynamoDB console, restore table to pre-write timestamp
@@ -200,7 +200,7 @@ Validate:
 
 **Pass criteria:** restore completes, data state matches expected point in time
 
-### Quarterly — Full infrastructure redeploy test
+### Quarterly: Full infrastructure redeploy test
 1. Run `terraform destroy` against staging
 2. Run `terraform apply` from scratch
 3. Verify all resources recreate cleanly
