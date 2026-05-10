@@ -96,6 +96,33 @@ The following alarms are configured:
 | Lambda Errors | Detect failed Lambda executions |
 | Lambda Duration | Detect elevated execution duration |
 | API Gateway 5XX | Detect backend/API failures |
+## Where to Find Logs and Metrics
+### Logs
+CloudWatch → Log Groups:
+- `/aws/lambda/api-staging`
+- `/aws/lambda/api-production`
+- `/aws/apigateway/api-staging`
+- `/aws/apigateway/api-production`
+
+Filter by request ID to trace a specific invocation end-to-end.
+
+### Metrics
+CloudWatch → Metrics → Lambda:
+- Errors, Duration, Throttles, Invocations
+
+CloudWatch → Metrics → ApiGateway:
+- 5XXError, 4XXError, Latency
+
+### Alarms Dashboard
+CloudWatch → Alarms → All Alarms
+Filter by environment tag: `staging` or `production`
+
+## Alarm Meanings
+| Alarm | Threshold | Meaning | Severity |
+|---|---|---|---|
+| Lambda Errors | >5% error rate over 5 min | Requests are failing — likely a code bug, bad deploy, or DynamoDB issue | High |
+| Lambda Duration | p99 > 10s over 5 min | Executions approaching the 15s timeout — likely slow DynamoDB or logic regression | Medium |
+| API Gateway 5XX | Any 5XX over 5 min | API is returning server errors — check Lambda logs for root cause | High |
 
 ## Operational Runbooks
 ### Elevated Error Rate
@@ -250,7 +277,6 @@ Then inspect the backend bucket:
 ```
 S3 → my-terraform-state-bucket-mb → staging/
 ```
-If this file exists:
 ```
 If this file exists:
 ```
@@ -271,6 +297,12 @@ Example:
 terraform force-unlock d88b3fe8-3202-2092-db3e-5c1493fc10f8
 ```
 Only force-unlock when you are sure no Terraform operation is still running.
+
+### Verify recovery
+After rollback, confirm:
+- CloudWatch error alarm returns to OK state
+- `curl https://<api-endpoint>/health` returns `{"status":"ok"}`
+- No new errors in CloudWatch Logs within 2 minutes
 
 ## DynamoDB Point-In-Time Recovery
 DynamoDB Point-In-Time Recovery is enabled for the application event tables.
