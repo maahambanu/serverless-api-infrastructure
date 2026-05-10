@@ -277,9 +277,6 @@ Then inspect the backend bucket:
 ```
 S3 → my-terraform-state-bucket-mb → staging/
 ```
-```
-If this file exists:
-```
 delete only:
 ```
 terraform.tfstate.tflock
