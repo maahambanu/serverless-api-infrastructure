@@ -285,6 +285,19 @@ The solution was designed for AWS Free Tier compatibility where possible:
 - API Gateway HTTP API
 - CloudWatch basic monitoring
 
+## Security Posture
+
+Security controls implemented include:
+
+- Authentication via Github OIDC
+- least privilege IAM policies
+- Trivy dependency and IaC scanning
+- Terraform state locking
+- externalized configuration via AWS SSM
+- immutable deployment artifacts
+- manual production approval gates
+- CloudWatch operational monitoring
+
 ## Cost Considerations
 The current implementation is intentionally optimized for low operational overhead and cost efficiency by leveraging serverless AWS services such as Lambda, API Gateway HTTP API, and DynamoDB On-Demand billing. This architecture is highly cost-effective for small to medium workloads because compute and database costs scale based on actual usage rather than pre-provisioned infrastructure.
 
@@ -321,8 +334,6 @@ The solution prioritizes:
 ## Future Improvements
 
 Potential production-scale enhancements:
-
-- GitHub OIDC federation
 - Canary deployments
 - Blue/Green deployments
 - Cross-region failover
@@ -330,15 +341,3 @@ Potential production-scale enhancements:
 - WAF integration
 - Centralized observability dashboards
 
-## Security Posture
-
-Security controls implemented include:
-
-- Authentication via Github OIDC
-- least privilege IAM policies
-- Trivy dependency and IaC scanning
-- Terraform state locking
-- externalized configuration via AWS SSM
-- immutable deployment artifacts
-- manual production approval gates
-- CloudWatch operational monitoring
