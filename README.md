@@ -34,10 +34,6 @@ The architecture uses serverless AWS services to minimize infrastructure managem
 ## Architecture
 <img width="1361" height="1327" alt="serverless-api-infra drawio" src="https://github.com/user-attachments/assets/5ad1236d-194d-4209-945a-19332f4c9987" />
 
-
-## Pipeline Worflow
-<img width="667" height="269" alt="image" src="https://github.com/user-attachments/assets/db099402-8bf6-4086-be1b-f036dbcaaff1" />
-
 ## Project Structure
 ```
 .
