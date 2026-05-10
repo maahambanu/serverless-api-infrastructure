@@ -93,6 +93,7 @@ Implemented using GitHub Actions.
 - AWS SSM Parameter Store integration
 - Environment isolation
 - Artifact-based deployments
+- Github OIDC for authentication
 
 ### Observability
 - CloudWatch Logs
