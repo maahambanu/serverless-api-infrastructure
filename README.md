@@ -99,7 +99,6 @@ Implemented using GitHub Actions.
 - Lambda error alarms
 - Lambda duration alarms
 - API Gateway 5XX alarms
-- X-Ray tracing enabled
 
 ### Disaster Recovery
 - DynamoDB Point-In-Time Recovery (PITR)
