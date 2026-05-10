@@ -21,7 +21,7 @@ env:
   TF_VERSION: 1.10.5
   AWS_REGION: ap-south-1
   LAMBDA_ARTIFACT_BUCKET: serverless-api-artifacts-mb
-  AWS_ROLE_ARN: arn:aws:iam::<AWS_ACCOUNT_ID>:role/github-actions-oidc-role
+  AWS_ROLE_ARN: arn:aws:iam::135808925550:role/github-actions-oidc-role
 
 jobs:
   node-tests:
