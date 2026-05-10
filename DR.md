@@ -179,3 +179,40 @@ Validate:
 - state lock recovery process
 - remote backend accessibility
 - infrastructure reproducibility
+
+## Regular DR Testing
+
+### Monthly — Rollback test (staging)
+1. Identify the second-most-recent artifact in S3
+2. Trigger the Manual Rollback workflow against staging
+3. Provide the previous artifact key
+4. Verify `/health` returns `{"status":"ok"}` after rollback
+5. Redeploy current version to restore staging
+
+**Pass criteria:** rollback completes in under 15 minutes
+
+### Quarterly — DynamoDB PITR restore test
+1. Note current timestamp
+2. Write 3–5 test records via `POST /event`
+3. In DynamoDB console, restore table to pre-write timestamp
+4. Verify test records are absent in the restored table
+5. Delete restored table after verification
+
+**Pass criteria:** restore completes, data state matches expected point in time
+
+### Quarterly — Full infrastructure redeploy test
+1. Run `terraform destroy` against staging
+2. Run `terraform apply` from scratch
+3. Verify all resources recreate cleanly
+4. Verify `/health` endpoint responds
+
+**Pass criteria:** full redeploy completes in under 30 minutes with no manual steps
+## Failure Scenarios and Recovery Actions
+
+| Scenario | Impact | Recovery Action | Estimated RTO |
+|---|---|---|---|
+| Bad code deployment | API errors / failures | Trigger rollback workflow with previous artifact | ~10 min |
+| Lambda misconfiguration | API unavailable | `terraform apply` with corrected config | ~10 min |
+| DynamoDB data corruption | Event data loss/corruption | PITR restore to pre-corruption timestamp | ~20 min |
+| Terraform state corruption | Deployments blocked | Restore `terraform.tfstate` from S3 versioning | ~15 min |
+| Full environment loss | Complete outage | `terraform apply` from scratch against fresh environment | ~30 min |
