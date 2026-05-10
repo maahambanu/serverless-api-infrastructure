@@ -32,6 +32,8 @@ The architecture uses serverless AWS services to minimize infrastructure managem
 - disaster recovery considerations
   
 ## Architecture
+<img width="1361" height="1327" alt="serverless-api-infra drawio" src="https://github.com/user-attachments/assets/5ad1236d-194d-4209-945a-19332f4c9987" />
+
 
 ## Pipeline Worflow
 <img width="667" height="269" alt="image" src="https://github.com/user-attachments/assets/db099402-8bf6-4086-be1b-f036dbcaaff1" />
@@ -87,6 +89,7 @@ Implemented using GitHub Actions.
   
 ### Security
 - Github OIDC for pipeline authentication
+- Dedicated IAM roles for Github OIDC
 - Least privilege IAM policies
 - Trivy dependency scanning
 - Trivy IaC scanning
@@ -119,15 +122,29 @@ Response:
   "status": "ok"
 }
 ```
-To test localy use this command (assuming you have already done the deployment)
+To test locally use this command (assuming you have already done the deployment)
 ```
 terraform output
-curl.exe https://<unique-id>.execute-api.ap-south-1.amazonaws.com/health
+curl.exe https://<api-id>.execute-api.ap-south-1.amazonaws.com/health
 ```
 response: 
 ```
 {"status":"ok"}
 ```
+```
+POST
+```
+Response:
+```
+event stored @{id=1778410561801; type=user_signup; payload=; timestamp=2026-05-10T10:56:01.801Z}
+```
+To test locally use this command (assuming you have already done the deployment)
+```
+curl.exe -X POST https://<api-id>.execute-api.ap-south-1.amazonaws.com/event ^
+  -H "Content-Type: application/json" ^
+  -d "{\"type\":\"user_signup\",\"payload\":{\"user\":\"maham\",\"source\":\"web\"}}"
+```
+
 Please note that you can do the same with your browser. 
 <img width="437" height="196" alt="image" src="https://github.com/user-attachments/assets/75d6b5c7-1517-48b4-9f98-76022eb4df7a" />
 
@@ -321,7 +338,7 @@ Potential production-scale enhancements:
 
 Security controls implemented include:
 
-- dedicated IAM user for CI/CD
+- Authentication via Github OIDC
 - least privilege IAM policies
 - Trivy dependency and IaC scanning
 - Terraform state locking
