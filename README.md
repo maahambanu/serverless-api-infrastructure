@@ -27,7 +27,7 @@ The architecture uses serverless AWS services to minimize infrastructure managem
 - immutable Lambda artifacts
 - remote Terraform state locking
 - manual production approvals
-- security scanning
+- security scanning via Trivy
 - rollback workflows
 - disaster recovery considerations
   
@@ -86,6 +86,7 @@ Implemented using GitHub Actions.
 - Production deployment
   
 ### Security
+- Github OIDC for pipeline authentication
 - Least privilege IAM policies
 - Trivy dependency scanning
 - Trivy IaC scanning
@@ -93,7 +94,6 @@ Implemented using GitHub Actions.
 - AWS SSM Parameter Store integration
 - Environment isolation
 - Artifact-based deployments
-- Github OIDC for authentication
 
 ### Observability
 - CloudWatch Logs
@@ -153,7 +153,7 @@ Trivy scans:
 - Node.js application dependencies
 - Terraform Infrastructure as Code configuration
 
-The pipeline fails when Trivy detects HIGH or CRITICAL findings.
+The pipeline fails when Trivy detects **HIGH** or **CRITICAL** findings.
 
 This provides an early security gate before infrastructure changes are deployed to AWS.
 
