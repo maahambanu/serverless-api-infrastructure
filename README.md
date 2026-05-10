@@ -106,6 +106,48 @@ Implemented using GitHub Actions.
 - Immutable Lambda artifact versioning
 - Manual rollback workflow
 - Remote Terraform state backup
+
+## Bootstrap (one-time manual setup)
+
+Two S3 buckets are created manually before Terraform runs.
+This is intentional — both buckets are prerequisites for the
+deployment pipeline itself and must not be managed by Terraform.
+
+### 1. Terraform remote state bucket
+Must exist before `terraform init` can initialise the backend.
+
+```bash
+aws s3api create-bucket \
+  --bucket my-terraform-state-bucket-mb \
+  --region ap-south-1 \
+  --create-bucket-configuration LocationConstraint=ap-south-1
+
+aws s3api put-bucket-versioning \
+  --bucket my-terraform-state-bucket-mb \
+  --versioning-configuration Status=Enabled
+```
+
+### 2. Lambda artifact bucket
+Stores versioned Lambda ZIPs (`lambda-<commit-sha>.zip`) used by
+all deployments and rollbacks.
+
+Intentionally kept outside Terraform for two reasons:
+- it must exist before the pipeline runs for the first time
+- if a Terraform operation fails mid-deploy, the artifact bucket
+  remains intact and rollback is still possible
+
+```bash
+aws s3api create-bucket \
+  --bucket serverless-api-artifacts-mb \
+  --region ap-south-1 \
+  --create-bucket-configuration LocationConstraint=ap-south-1
+
+aws s3api put-bucket-versioning \
+  --bucket serverless-api-artifacts-mb \
+  --versioning-configuration Status=Enabled
+```
+
+**All other infrastructure is managed by Terraform.**
   
 ## API Endpoints
 ### Health Endpoint
