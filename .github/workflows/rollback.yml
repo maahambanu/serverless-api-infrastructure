@@ -15,13 +15,15 @@ on:
         description: "Lambda artifact key in S3"
         required: true
 
-      lambda_source_hash:
-        description: "Lambda source hash"
-        required: true
+permissions:
+  id-token: write
+  contents: read
 
 env:
   TF_VERSION: 1.10.5
   AWS_REGION: ap-south-1
+  LAMBDA_ARTIFACT_BUCKET: serverless-api-artifacts-mb
+  AWS_ROLE_ARN: arn:aws:iam::135808925550:role/github-actions-oidc-role
 
 jobs:
   rollback:
@@ -42,18 +44,27 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Download rollback artifact
+        run: |
+          aws s3 cp \
+            s3://${{ env.LAMBDA_ARTIFACT_BUCKET }}/${{ github.event.inputs.lambda_artifact_key }} \
+            /tmp/lambda.zip
+
+      - name: Generate Lambda source hash
+        run: |
+          echo "LAMBDA_HASH=$(openssl dgst -sha256 -binary /tmp/lambda.zip | openssl base64)" >> $GITHUB_ENV
 
       - name: Terraform Init
         run: terraform init
 
       - name: Rollback Deployment
         run: |
-          terraform apply -auto-approve \
+          terraform apply -auto-approve -lock-timeout=5m -input=false \
             -var="lambda_artifact_key=${{ github.event.inputs.lambda_artifact_key }}" \
-            -var="lambda_source_hash=${{ github.event.inputs.lambda_source_hash }}"
+            -var="lambda_source_hash=${{ env.LAMBDA_HASH }}"
