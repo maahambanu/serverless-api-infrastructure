@@ -82,6 +82,32 @@ Implemented using GitHub Actions.
 - Automatic staging deployment
 - Manual production approval gate
 - Production deployment
+
+### Reviewing the CI/CD Pipeline
+
+To view the full pipeline execution:
+
+1. Go to the [Actions tab](https://github.com/maahambanu/serverless-api-infrastructure/actions)
+2. Click on the latest workflow run
+3. All pipeline stages are visible here:
+   - Node Lint + Tests
+   - Trivy Security Scan
+   - Terraform Checks
+   - Deploy to Staging
+   - Manual Approval Gate (production)
+   - Deploy to Production
+
+### Manual Production Approval
+
+Production deployments are protected by a GitHub Environment approval gate.
+
+After staging deploys successfully, the pipeline pauses and waits for a reviewer to manually approve before proceeding to production. This is visible in the Actions tab as a pending approval step.
+
+To approve:
+1. Open the workflow run in Actions
+2. Click **Review deployments**
+3. Select **production**
+4. Click **Approve and deploy**
   
 ### Security
 - Github OIDC for pipeline authentication
