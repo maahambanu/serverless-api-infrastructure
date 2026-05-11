@@ -276,14 +276,6 @@ This prevents:
 <img width="448" height="241" alt="image" src="https://github.com/user-attachments/assets/10c8b2eb-ec36-4e68-9af5-9ca732fb13c2" />
 <img width="448" height="281" alt="image" src="https://github.com/user-attachments/assets/abe5fc7b-0f4e-4f11-9a53-0285569301a8" />
 
-## Secrets and Configuration Management
-
-Application configuration is externalized using:
-- AWS Systems Manager Parameter Store (SSM)
-
-CI/CD credentials are securely stored in:
-- GitHub Actions Secrets
-
 **No secrets are committed to the repository.**
 
 ## Monitoring & Alerting
