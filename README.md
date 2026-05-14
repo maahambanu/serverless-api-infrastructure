@@ -119,12 +119,14 @@ To approve:
 - AWS SSM Parameter Store integration
 - Environment isolation
 - Artifact-based deployments
+<img width="728" height="88" alt="image" src="https://github.com/user-attachments/assets/6a043193-425f-47d8-b706-5d9766acd67b" />
 
 ### Observability
 - CloudWatch Logs
 - Lambda error alarms
 - Lambda duration alarms
 - API Gateway 5XX alarms
+- SNS for notifications
 
 ### Disaster Recovery
 - DynamoDB Point-In-Time Recovery (PITR)
@@ -216,7 +218,8 @@ curl.exe -X POST https://<api-id>.execute-api.ap-south-1.amazonaws.com/event ^
 ```
 
 Please note that you can do the same with your browser. 
-<img width="437" height="196" alt="image" src="https://github.com/user-attachments/assets/75d6b5c7-1517-48b4-9f98-76022eb4df7a" />
+<img width="724" height="209" alt="image" src="https://github.com/user-attachments/assets/32f7f619-ec0c-4947-9a0e-61028f1d5d0f" />
+
 
 #### Infrastructure Validation
 
@@ -273,8 +276,9 @@ This prevents:
 - concurrent deployments
 - state corruption
 - unsafe infrastructure changes
-<img width="448" height="241" alt="image" src="https://github.com/user-attachments/assets/10c8b2eb-ec36-4e68-9af5-9ca732fb13c2" />
-<img width="448" height="281" alt="image" src="https://github.com/user-attachments/assets/abe5fc7b-0f4e-4f11-9a53-0285569301a8" />
+<img width="715" height="308" alt="image" src="https://github.com/user-attachments/assets/9608f8ea-3630-4251-86c8-7563bda84252" />
+<img width="722" height="324" alt="image" src="https://github.com/user-attachments/assets/0ebcf5a8-daab-4886-9b8c-9504af9c8ebe" />
+
 
 **No secrets are committed to the repository.**
 
@@ -283,6 +287,7 @@ Implemented CloudWatch alarms:
 - Lambda Errors
 - Lambda Duration
 - API Gateway 5XX responses
+- SNS topics for notifications
 
 These alarms support:
 
@@ -291,6 +296,8 @@ These alarms support:
 - operational incident response
 <img width="749" height="320" alt="image" src="https://github.com/user-attachments/assets/90b62473-ff01-443a-b842-beb8f7757406" />
 <img width="938" height="320" alt="image" src="https://github.com/user-attachments/assets/9bddf191-ce02-4c23-8a1e-5d5ae53746ce" />
+<img width="735" height="171" alt="image" src="https://github.com/user-attachments/assets/093d53de-124d-4ccd-b39e-617918515a23" />
+
 
 ### Setup Instructions
 Prerequisites:
